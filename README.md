@@ -44,5 +44,5 @@ Note: If you prefer, we have the ZORIS static binary in the ```static``` directo
 - [x] amd64
 - [ ] i386
 - [ ] arm64
-- [ ] armv6
+- [X] armv7
 
