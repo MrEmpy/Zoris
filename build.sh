@@ -35,12 +35,12 @@ requirements() {
         pip install pyinstaller
         pip install staticx
     elif [ "$OS" = "Debian" ]; then
-        apt-get install python3 python3-pip build-essential locate -y
+        apt-get install python3 python3-pip python3-dev python-dev build-essential locate -y
         apt install patchelf binutils -y
         pip install pyinstaller
         pip install staticx
     else
-        apt-get install python3 python3-pip build-essential locate -y
+        apt-get install python3 python3-pip python3-dev python-dev build-essential locate -y
         apt install patchelf binutils -y
         pip install pyinstaller
         pip install staticx
